@@ -10,10 +10,14 @@ namespace RentingAll.Areas.Cars.Models.Cars
 
         public string Description { get; set; }
 
+        [Display(Name = "Image URL")]
         public string ImageUrl { get; set; }
 
         public int Year { get; set; }
 
+        [Display(Name = "Category")]
         public int CategoryId { get; set; }
+
+        public IEnumerable<CarCategoryViewModel> Categories { get; set; }
     }
 }
