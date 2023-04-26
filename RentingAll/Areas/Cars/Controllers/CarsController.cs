@@ -51,7 +51,26 @@ namespace RentingAll.Areas.Cars.Controllers
             data.Cars.Add(userCar);
             data.SaveChanges();
             
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction(nameof(All));
+        }
+
+        public IActionResult All()
+        {
+            var cars = data
+                .Cars
+                .OrderByDescending(c => c.Id)
+                .Select(c => new CarListingViewModel
+                {
+                    Id = c.Id,
+                    Brand = c.Brand,
+                    Model = c.Model,
+                    Year = c.Year,
+                    ImageUrl = c.ImageUrl,
+                    Category = c.Category.Name
+                })
+                .ToList();
+
+            return View(cars);
         }
 
         private IEnumerable<CarCategoryViewModel> GetCarCategories()

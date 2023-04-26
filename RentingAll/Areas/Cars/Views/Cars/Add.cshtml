@@ -10,6 +10,8 @@
             
             <h2 class="heading-margin text-center">Add Car</h2>
 
+            <div asp-validation-summary="All"></div>
+
             <form method="post">
                 <div class="mb-3">
                     <label asp-for="Brand" class="form-label"></label>
@@ -43,6 +45,7 @@
                             <option value="@category.Id">@category.Name</option>
                         }
                     </select>
+                    <span asp-validation-for="CategoryId" class="small text-danger"></span>
                 </div>                
                 <div class="mb-3 form-check">
                     <input type="checkbox" class="form-check-input" id="exampleCheck1">
