@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RentingAll.Areas.Cars.Models.Cars;
+using RentingAll.Areas.Cars.Models.Home;
 using RentingAll.Data;
 using RentingAll.Models;
 using System.Diagnostics;
@@ -17,22 +17,27 @@ namespace RentingAll.Areas.Cars.Controllers
 
         public IActionResult Index()
         {
+            var totalCars = data.Cars.Count();
+
             var cars = data
                 .Cars
                 .OrderByDescending(c => c.Id)
-                .Select(c => new CarListingViewModel
+                .Select(c => new CarIndexViewModel
                 {
                     Id = c.Id,
                     Brand = c.Brand,
                     Model = c.Model,
                     Year = c.Year,
-                    ImageUrl = c.ImageUrl,
-                    Category = c.Category.Name
+                    ImageUrl = c.ImageUrl
                 })
                 .Take(3)
                 .ToList();
 
-            return View(cars);
+            return View(new IndexViewModel
+            {
+                TotalCars = totalCars,
+                Cars = cars
+            });
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
