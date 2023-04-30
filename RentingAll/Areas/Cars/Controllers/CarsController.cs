@@ -70,7 +70,10 @@ namespace RentingAll.Areas.Cars.Controllers
                 })
                 .ToList();
 
-            return View(cars);
+            return View(new AllCarsQueryModel
+            {
+                Cars = cars
+            });
         }
 
         private IEnumerable<CarCategoryViewModel> GetCarCategories()
