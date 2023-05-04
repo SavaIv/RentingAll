@@ -54,9 +54,14 @@ namespace RentingAll.Areas.Cars.Controllers
             return RedirectToAction(nameof(All));
         }
 
-        public IActionResult All(string searchTerm)
+        public IActionResult All(string brand, string searchTerm)
         {
             var carsQuery = data.Cars.AsQueryable();
+
+            if(!string.IsNullOrWhiteSpace(brand))
+            {
+                carsQuery = carsQuery.Where(c => c.Brand == brand);
+            }
 
             if (!string.IsNullOrWhiteSpace(searchTerm))
             {
@@ -79,11 +84,19 @@ namespace RentingAll.Areas.Cars.Controllers
                 })
                 .ToList();
 
+            var carBrands = data
+                .Cars
+                .Select(c => c.Brand)
+                .Distinct()
+                .OrderBy(br => br)
+                .ToList();
+
             return View(new AllCarsQueryModel
             {
+                Brands = carBrands,
                 Cars = cars,
                 SearchTerm = searchTerm
-            });
+            }); ;
         }
 
         private IEnumerable<CarCategoryViewModel> GetCarCategories()

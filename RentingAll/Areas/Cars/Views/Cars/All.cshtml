@@ -8,8 +8,16 @@
                 <input asp-for="SearchTerm" class="form-control" placeholder="Mercedes, BMW, Opel, ...">                
             </div>
             <div class="mb-3 col-md-4">
-                <label  class="form-label"></label>
-                <input  class="form-control" placeholder="Mercedes, BMW, Opel, ...">                
+                <div class="mb-3">
+                    <label asp-for="Brand" class="form-label"></label>                    
+                    <select asp-for="Brand" class="form-select">
+                        <option value="">All</option>
+
+                        @foreach(var brand in Model.Brands){
+                            <option value="@brand">@brand</option>
+                        }
+                    </select>                    
+                </div>                 
             </div>
             <div class="mb-3 col-md-4">
                 <label  class="form-label"></label>
