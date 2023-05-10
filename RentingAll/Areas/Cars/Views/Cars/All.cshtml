@@ -3,10 +3,12 @@
 <div class="row">
     <form method="get">
         <div class="row">
+            
             <div class="mb-3 col-md-4">
                 <label asp-for="SearchTerm" class="form-label"></label>
                 <input asp-for="SearchTerm" class="form-control" placeholder="Mercedes, BMW, Opel, ...">                
             </div>
+            
             <div class="mb-3 col-md-4">
                 <div class="mb-3">
                     <label asp-for="Brand" class="form-label"></label>                    
@@ -19,11 +21,19 @@
                     </select>                    
                 </div>                 
             </div>
+            
             <div class="mb-3 col-md-4">
-                <label  class="form-label"></label>
-                <input  class="form-control" placeholder="Mercedes, BMW, Opel, ...">                
-            </div>            
+                <div class="mb-3">
+                    <label asp-for="Sorting" class="form-label"></label>                    
+                    <select asp-for="Sorting" class="form-select">
+                        <option value="0" selected>Date Created</option>                        
+                        <option value="1">Year</option>                        
+                        <option value="2">Brand And Model</option>                        
+                    </select>                    
+                </div>                 
+            </div>                      
         </div>
+        
         <div class="row mb-3">                
             <input type="submit" class="btn btn-primary ala" value="Search">                
         </div>
