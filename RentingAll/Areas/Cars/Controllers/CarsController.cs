@@ -54,31 +54,28 @@ namespace RentingAll.Areas.Cars.Controllers
             return RedirectToAction(nameof(All));
         }
 
-        public IActionResult All(
-            string brand, 
-            string searchTerm,
-            CarSorting sorting)
+        public IActionResult All([FromQuery]AllCarsQueryModel query)
         {
             var carsQuery = data.Cars.AsQueryable();
 
-            if(!string.IsNullOrWhiteSpace(brand))
+            if(!string.IsNullOrWhiteSpace(query.Brand))
             {
-                carsQuery = carsQuery.Where(c => c.Brand == brand);
+                carsQuery = carsQuery.Where(c => c.Brand == query.Brand);
             }
 
-            if (!string.IsNullOrWhiteSpace(searchTerm))
+            if (!string.IsNullOrWhiteSpace(query.SearchTerm))
             {
                 carsQuery = carsQuery.Where(c =>
-                    (c.Brand + " " + c.Model).ToLower().Contains(searchTerm.ToLower()) ||
+                    (c.Brand + " " + c.Model).ToLower().Contains(query.SearchTerm.ToLower()) ||
                     //c.Model.ToLower().Contains(searchTerm.ToLower()) ||
-                    c.Description.ToLower().Contains(searchTerm.ToLower()));
+                    c.Description.ToLower().Contains(query.SearchTerm.ToLower()));
             }
 
-            carsQuery = sorting switch
+            carsQuery = query.Sorting switch
             {
                 CarSorting.DateCtreated => carsQuery.OrderByDescending(c => c.Id),
                 CarSorting.Year => carsQuery.OrderByDescending(c => c.Year),
-                CarSorting.BrandAndModel => carsQuery.OrderByDescending(c => c.Brand).ThenBy(c => c.Model),
+                CarSorting.BrandAndModel => carsQuery.OrderBy(c => c.Brand).ThenBy(c => c.Model),
                 _ => carsQuery.OrderByDescending(c => c.Id)
             };
 
@@ -101,14 +98,10 @@ namespace RentingAll.Areas.Cars.Controllers
                 .OrderBy(br => br)
                 .ToList();
 
-            return View(new AllCarsQueryModel
-            {
-                Brand = brand,
-                Brands = carBrands,
-                SearchTerm = searchTerm,
-                Sorting = sorting,
-                Cars = cars                
-            });
+            query.Brands = carBrands;
+            query.Cars = cars;
+
+            return View(query);
         }
 
         private IEnumerable<CarCategoryViewModel> GetCarCategories()
