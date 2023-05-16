@@ -4,6 +4,10 @@ namespace RentingAll.Areas.Cars.Models.Cars
 {
     public class AllCarsQueryModel
     {
+        public const int CarsPerPage = 3;
+
+        public int CurrentPage { get; set; } = 1;
+
         public string Brand { get; set; }
 
         public IEnumerable<string> Brands { get; set; }
