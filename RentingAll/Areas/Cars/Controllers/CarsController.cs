@@ -79,6 +79,8 @@ namespace RentingAll.Areas.Cars.Controllers
                 _ => carsQuery.OrderByDescending(c => c.Id)
             };
 
+            var totalCars = carsQuery.Count();
+
             var cars = carsQuery
                 .Skip((query.CurrentPage - 1) * AllCarsQueryModel.CarsPerPage)
                 .Take(AllCarsQueryModel.CarsPerPage)
@@ -100,6 +102,7 @@ namespace RentingAll.Areas.Cars.Controllers
                 .OrderBy(br => br)
                 .ToList();
 
+            query.TotalCars = totalCars;
             query.Brands = carBrands;
             query.Cars = cars;
 

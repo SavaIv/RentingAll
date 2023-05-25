@@ -8,6 +8,8 @@ namespace RentingAll.Areas.Cars.Models.Cars
 
         public int CurrentPage { get; set; } = 1;
 
+        public int TotalCars { get; set; }
+
         public string Brand { get; set; }
 
         public IEnumerable<string> Brands { get; set; }
