@@ -261,7 +261,7 @@ namespace RentingAll.Data.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Cars");
+                    b.ToTable("Cars", (string)null);
                 });
 
             modelBuilder.Entity("RentingAll.Areas.Cars.Data.Models.Category", b =>
@@ -278,7 +278,7 @@ namespace RentingAll.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
